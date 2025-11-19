@@ -27,14 +27,14 @@ echo "Running on host: $(hostname)"
 echo "GPU info:"
 nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits || echo "No GPU detected"
 
-python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
---tasks translation_only \
---output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/translation_only-rerun \
---model_type vllm \
---model_name /scratch/e1583535/llm/nus-olmo/para-last-n10B \
---model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
---is_base_model \
---num_in_context_examples 5
+# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
+# --tasks translation_only \
+# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/translation_only-rerun \
+# --model_type vllm \
+# --model_name /scratch/e1583535/llm/nus-olmo/para-last-n10B \
+# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
+# --is_base_model \
+# --num_in_context_examples 5
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks nlp_sentiment_nli_casual \
@@ -56,9 +56,9 @@ python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks qa_1shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/qa_1shot \
+# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/qa_1shot-rerun \
 # --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
+# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B-step42931 \
 # --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
 # --is_base_model \
 # --num_in_context_examples 1
@@ -74,12 +74,23 @@ python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks abssum_1shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_1shot \
+# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_1shot-rerun \
 # --model_type vllm \
 # --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
 # --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
 # --is_base_model \
-# --num_in_context_examples 1
+# --num_in_context_examples 1 \
+# --rerun_cached_results
+
+# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
+# --tasks abssum_0shot \
+# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_0shot \
+# --model_type vllm \
+# --model_name /scratch/e1583535/llm/nus-olmo/para-last-n10B-rerun \
+# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
+# --is_base_model \
+# --num_in_context_examples 0 \
+# --rerun_cached_results
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks abssum_2shot \

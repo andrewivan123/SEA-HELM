@@ -55,13 +55,18 @@ qa_5shot:
 qa_1shot:
   ta: ["qa"]
 
+qa_0shot:
+  ta: ["qa"]
+
 abssum_5shot:
   id: ["abssum"]
 
 abssum_1shot:
-  ta: ["abssum"]
   th: ["abssum"] 
   tl: ["abssum"]
+
+abssum_0shot:
+  ta: ["abssum"]
 
 abssum_2shot:
   vi: ["abssum"]
