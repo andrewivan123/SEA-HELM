@@ -33,6 +33,15 @@ translation_only:
   vi: ["translation-en-xx", "translation-xx-en"]
   zh: ["translation-en-xx", "translation-xx-en"]
 
+translation_xalma_sea:
+  id: ["translation-en-xx", "translation-xx-en"]
+  ms: ["translation-en-xx", "translation-xx-en"]
+  th: ["translation-en-xx", "translation-xx-en"]
+  vi: ["translation-en-xx", "translation-xx-en"]
+
+translation_xalma_zh:
+  zh: ["translation-en-xx", "translation-xx-en"]
+
 nlp_classics:
   id: ["abssum", "qa", "sentiment", "nli", "causal"]
   vi: ["abssum", "qa", "sentiment", "nli", "causal"]
