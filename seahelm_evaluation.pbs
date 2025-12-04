@@ -27,14 +27,32 @@ echo "Running on host: $(hostname)"
 echo "GPU info:"
 nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits || echo "No GPU detected"
 
+python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
+--tasks translation_tl \
+--output_dir /scratch/e1583535/outputs/seahelm/new-tl-translation-eval/translation_tl \
+--model_type vllm \
+--model_name sail/Sailor2-L-1B \
+--model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
+--num_in_context_examples 5 \
+--is_base_model
+
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks translation_only \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/translation_only-rerun \
+# --tasks translation_xalma_sea \
+# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/parallel-last-100B-checkpoints-evaluation/translation_only-0shot \
 # --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-n10B \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 5
+# --model_name haoranxu/X-ALMA-13B-Group4 \
+# --model_args "enable_prefix_caching=True,tensor_parallel_size=4,max_num_seqs=128" \
+# --num_in_context_examples 0
+# --is_base_model
+
+# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
+# --tasks translation_xalma_zh \
+# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/parallel-last-100B-checkpoints-evaluation/translation_only-0shot \
+# --model_type vllm \
+# --model_name haoranxu/X-ALMA-13B-Group6 \
+# --model_args "enable_prefix_caching=True,tensor_parallel_size=4,max_num_seqs=128" \
+# --num_in_context_examples 0
+# --is_base_model
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks nlp_sentiment_nli_casual \

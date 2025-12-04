@@ -42,6 +42,9 @@ translation_xalma_sea:
 translation_xalma_zh:
   zh: ["translation-en-xx", "translation-xx-en"]
 
+translation_tl:
+  tl: ["translation-en-xx", "translation-xx-en"]
+
 nlp_classics:
   id: ["abssum", "qa", "sentiment", "nli", "causal"]
   vi: ["abssum", "qa", "sentiment", "nli", "causal"]

@@ -1,0 +1,38 @@
+#!/bin/bash
+#PBS -P CFP01-CF-060
+#PBS -j oe
+#PBS -k oed
+#PBS -N seahelm_eval
+#PBS -q auto
+#PBS -l select=1:ngpus=4
+#PBS -l walltime=56:00:00
+
+cd $PBS_O_WORKDIR
+
+image="/app1/common/singularity-img/hopper/pytorch/pytorch_2.3.0_cuda_12.4_ngc_24.04.sif"
+
+module load singularity
+
+singularity exec -e \
+--env HF_HOME=/scratch/e1583535/cache \
+--env HF_DATASETS_CACHE=/scratch/e1583535/cache/datasets \
+$image bash << EOF > /scratch/e1583535/multiLingual-llm-project/logs/eval/seahelm/stdout.$PBS_JOBID.log 2> /scratch/e1583535/multiLingual-llm-project/logs/eval/seahelm/stderr.$PBS_JOBID.log
+
+if [ -d "/hpctmp/e1583535/virtualenvs/sea-helm" ]; then
+    source /hpctmp/e1583535/virtualenvs/sea-helm/bin/activate
+fi
+
+echo "Starting evaluating at $(date)"
+echo "Running on host: $(hostname)"
+echo "GPU info:"
+nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits || echo "No GPU detected"
+
+python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
+--tasks translation_xalma_zh \
+--output_dir /scratch/e1583535/multiLingual-llm-project/outputs/parallel-last-100B-checkpoints-evaluation/translation_only-0shot \
+--model_type vllm \
+--model_name haoranxu/X-ALMA-13B-Group6 \
+--model_args "enable_prefix_caching=True,tensor_parallel_size=4,max_num_seqs=128" \
+--num_in_context_examples 0
+
+EOF
