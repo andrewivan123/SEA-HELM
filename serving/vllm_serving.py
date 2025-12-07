@@ -137,7 +137,7 @@ class VLLMServing(BaseServing):
         return {
             "transformers_version": importlib_metadata.version("transformers"),
             "vllm_version": importlib_metadata.version("vllm"),
-            "vllm_config": str(self.llm.llm_engine.get_model_config()),
+            # "vllm_config": str(self.llm.llm_engine.get_model_config()),
         }
 
     def generate(self, messages: list, logprobs: bool = False, **generation_kwargs):
