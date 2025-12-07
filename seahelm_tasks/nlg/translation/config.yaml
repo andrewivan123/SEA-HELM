@@ -138,6 +138,31 @@ translation-en-xx:
           ```
           Salin: {label}
         fewshot_label: 'Salin: {label}'
+    tl_full:
+      filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/devtest/en_to_tgl_Latn_full.jsonl
+      example_filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/dev/en_to_tgl_Latn_examples.jsonl
+      max_tokens: 256
+      prompt_template:
+        template: |-
+          Isalin ang sumusunod na teksto sa Filipino.
+
+          Tumugon gamit ang sumusunod na format:
+          Salin: $TRANSLATION
+          Palitan ang $TRANSLATION gamit ng isinalin na teksto.{fewshot_examples}
+
+          Teksto:
+          ```
+          {text}
+          ```
+        fewshot_example: |2-
+
+
+          Teksto:
+          ```
+          {text}
+          ```
+          Salin: {label}
+        fewshot_label: 'Salin: {label}'
     km:
       filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/devtest/en_to_khm_Khmr.jsonl
       example_filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/dev/en_to_khm_Khmr_examples.jsonl
@@ -381,6 +406,31 @@ translation-xx-en:
         fewshot_label: 'மொழிபெயர்ப்பு: {label}'
     tl:
       filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/devtest/tgl_Latn_to_en.jsonl
+      example_filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/dev/tgl_Latn_to_en_examples.jsonl
+      max_tokens: 256
+      prompt_template:
+        template: |-
+          Isalin ang sumusunod na teksto sa English.
+
+          Tumugon gamit ang sumusunod na format:
+          Salin: $TRANSLATION
+          Palitan ang $TRANSLATION gamit ng isinalin na teksto.{fewshot_examples}
+
+          Teksto:
+          ```
+          {text}
+          ```
+        fewshot_example: |2-
+
+
+          Teksto:
+          ```
+          {text}
+          ```
+          Salin: {label}
+        fewshot_label: 'Salin: {label}'
+    tl_full:
+      filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/devtest/tgl_Latn_to_en_full.jsonl
       example_filepath: seahelm_tasks/nlg/translation/data/flores200_dataset/dev/tgl_Latn_to_en_examples.jsonl
       max_tokens: 256
       prompt_template:

@@ -21,7 +21,7 @@ seahelm_plus:
   jv: ["sentiment", "qa-mc", "metaphor", "translation-id-xx", "translation-xx-id", "if-eval", "mt-bench"]
   su: ["sentiment", "qa-mc", "metaphor", "translation-id-xx", "translation-xx-id", "if-eval", "mt-bench"]
 
-translation_only:
+seahelm_translation:
   id: ["translation-en-xx", "translation-xx-en"]
   km: ["translation-en-xx", "translation-xx-en"]
   lo: ["translation-en-xx", "translation-xx-en"]
@@ -30,6 +30,18 @@ translation_only:
   ta: ["translation-en-xx", "translation-xx-en"]
   th: ["translation-en-xx", "translation-xx-en"]
   tl: ["translation-en-xx", "translation-xx-en"]
+  vi: ["translation-en-xx", "translation-xx-en"]
+  zh: ["translation-en-xx", "translation-xx-en"]
+
+translation_only:
+  id: ["translation-en-xx", "translation-xx-en"]
+  km: ["translation-en-xx", "translation-xx-en"]
+  lo: ["translation-en-xx", "translation-xx-en"]
+  my: ["translation-en-xx", "translation-xx-en"]
+  ms: ["translation-en-xx", "translation-xx-en"]
+  ta: ["translation-en-xx", "translation-xx-en"]
+  th: ["translation-en-xx", "translation-xx-en"]
+  tl_full: ["translation-en-xx", "translation-xx-en"]
   vi: ["translation-en-xx", "translation-xx-en"]
   zh: ["translation-en-xx", "translation-xx-en"]
 
@@ -42,7 +54,7 @@ translation_xalma_sea:
 translation_xalma_zh:
   zh: ["translation-en-xx", "translation-xx-en"]
 
-translation_tl:
+translation_tl_full:
   tl: ["translation-en-xx", "translation-xx-en"]
 
 nlp_classics:
