@@ -41,7 +41,7 @@ def tokenize_line(line: str, lang: str) -> List[str]:
         try:
             from khmernltk import word_tokenize as khmer_word_tokenizer
         except ImportError:
-            raise RuntimeError("khmernltk is required for Khmer tokenization. Install with: pip install khmernltk")
+            raise RuntimeError("khmernltk is required for Khmer tokenization. Install with: pip install khmer-nltk")
         return khmer_word_tokenizer(line, return_tokens=True)
     elif lang in ("lo", "lao"):
         try:
