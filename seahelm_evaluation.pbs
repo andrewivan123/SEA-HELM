@@ -4,7 +4,7 @@
 #PBS -k oed
 #PBS -N seahelm_eval
 #PBS -q auto
-#PBS -l select=1:ngpus=2
+#PBS -l select=1:ngpus=8
 #PBS -l walltime=56:00:00
 
 cd $PBS_O_WORKDIR
@@ -28,13 +28,12 @@ echo "GPU info:"
 nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits || echo "No GPU detected"
 
 python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
---tasks translation_tl \
---output_dir /scratch/e1583535/outputs/seahelm/new-tl-translation-eval/translation_tl \
+--tasks translation_only \
+--output_dir /scratch/e1583535/outputs/seahelm/para-only-7B-checkpoints-and-others/translation_only \
 --model_type vllm \
---model_name sail/Sailor2-L-1B \
---model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
---num_in_context_examples 5 \
---is_base_model
+--model_name aisingapore/Qwen-SEA-LION-v4-32B-IT \
+--model_args "enable_prefix_caching=True,tensor_parallel_size=8,dtype=bfloat16" \
+--num_in_context_examples 5 
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks translation_xalma_sea \
@@ -44,79 +43,5 @@ python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --model_args "enable_prefix_caching=True,tensor_parallel_size=4,max_num_seqs=128" \
 # --num_in_context_examples 0
 # --is_base_model
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks translation_xalma_zh \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/parallel-last-100B-checkpoints-evaluation/translation_only-0shot \
-# --model_type vllm \
-# --model_name haoranxu/X-ALMA-13B-Group6 \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=4,max_num_seqs=128" \
-# --num_in_context_examples 0
-# --is_base_model
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks nlp_sentiment_nli_casual \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/nlp_sentiment_nli_casual \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 5
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks qa_5shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/qa_5shot \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 5
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks qa_1shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/qa_1shot-rerun \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B-step42931 \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 1
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks abssum_5shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_5shot \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 5
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks abssum_1shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_1shot-rerun \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 1 \
-# --rerun_cached_results
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks abssum_0shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_0shot \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-n10B-rerun \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 0 \
-# --rerun_cached_results
-
-# python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
-# --tasks abssum_2shot \
-# --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/evaluation-model-200K-bin-shard/abssum_2shot \
-# --model_type vllm \
-# --model_name /scratch/e1583535/llm/nus-olmo/para-last-100B \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=2,max_num_seqs=128" \
-# --is_base_model \
-# --num_in_context_examples 2
 
 EOF
