@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Add a list of models (either local path or HuggingFace model id) to be evaluated
-MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct"
+MODEL="/localhome/tansang/llm/aisingapore/Gemma-SEA-LION-v4-27B"
 
 OUTPUT="results"
 
 PYTHON_SCRIPT="seahelm_evaluation.py"
 
-IS_BASE_MODEL=false
+IS_BASE_MODEL=true
 RERUN_CACHED_RESULTS=false
 
 if [ $IS_BASE_MODEL == "true" ]; then
@@ -31,7 +31,7 @@ PYTHON_SCRIPT="seahelm_evaluation.py"
 export LITELLM_LOG="ERROR"
 
 if [ $IS_BASE_MODEL == "true" ]; then
-    BASE_MODEL="--base_model"
+    BASE_MODEL="--is_base_model"
 else
     BASE_MODEL=""
 fi
@@ -44,11 +44,11 @@ fi
 
 seahelm_eval_args=(
     "python $PYTHON_SCRIPT"
-    --tasks seahelm
+    --tasks translation_only
     --output_dir $output_dir
     --model_name $MODEL
     --model_type vllm
-    --model_args "dtype=bfloat16,enable_prefix_caching=True,tensor_parallel_size=1" 
+    --model_args "dtype=bfloat16,enable_prefix_caching=True,tensor_parallel_size=4" 
     $BASE_MODEL
     $RERUN_RESULTS
 )
