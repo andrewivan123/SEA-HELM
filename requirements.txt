@@ -11,5 +11,5 @@ pyonmttok==1.37.1
 pythainlp==5.0.5
 sacrebleu==2.4.3
 scikit-learn==1.4.2
-transformers==4.48.3
-vllm==0.7.3
+transformers==4.53.3
+vllm==0.8.3
