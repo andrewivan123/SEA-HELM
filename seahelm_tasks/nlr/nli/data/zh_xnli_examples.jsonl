@@ -1,5 +1,5 @@
-{"label": "C", "prompts": [{"sentence1": "他说，妈妈，我回来了。", "sentence2": "校车把他放下后，他立即给他妈妈打了电话。"}], "metadata": {"language": "zh"}}
-{"label": "B", "prompts": [{"sentence1": "他说，妈妈，我回来了。", "sentence2": "他没说一句话。"}], "metadata": {"language": "zh"}}
-{"label": "A", "prompts": [{"sentence1": "他说，妈妈，我回来了。", "sentence2": "他告诉他的妈妈他已经回到家了。"}], "metadata": {"language": "zh"}}
-{"label": "C", "prompts": [{"sentence1": "我不知道我要去干什么还是什么的，所以就去华盛顿指定的地方报到。", "sentence2": "我从来没有去过华盛顿，所以当我被派到那里时，为了找地方我都找迷路了。"}], "metadata": {"language": "zh"}}
-{"label": "B", "prompts": [{"sentence1": "我不知道我要去干什么还是什么的，所以就去华盛顿指定的地方报到。", "sentence2": "在我游行到华盛顿的时候我知道我要什么"}], "metadata": {"language": "zh"}}
+{"label": "C", "prompts": [{"sentence1": "是的，什么让我不爽你知道吗？去年12月份我们被打败，知道被多少票打扮吗？只被几百票打败。", "sentence2": "它被否决了，因为人们都不想出外投票。"}], "metadata": {"language": "zh"}}
+{"label": "A", "prompts": [{"sentence1": "我们得到的好处之一就是旅行", "sentence2": "旅行是我们得到的一个福利。"}], "metadata": {"language": "zh"}}
+{"label": "B", "prompts": [{"sentence1": "当球落下时，一个巨大的标志被照亮，并且在每张2000年发现卡上传播。", "sentence2": "这个标志保持着黑色。"}], "metadata": {"language": "zh"}}
+{"label": "C", "prompts": [{"sentence1": "政府，法律的batta, begar, chaprasi, dakoit, dakoity, dhan, dharna, kotwal, kotwali, panchayat, pottah, sabha", "sentence2": "我们收到了一长串稀奇古怪的条款。"}], "metadata": {"language": "zh"}}
+{"label": "A", "prompts": [{"sentence1": "大约10:15，从停车场返回西街的FDNY部门主任和安全主任确认南塔已经倒塌。", "sentence2": "南塔在10:15之前倒塌了。"}], "metadata": {"language": "zh"}}

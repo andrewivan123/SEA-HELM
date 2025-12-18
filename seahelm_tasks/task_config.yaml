@@ -122,3 +122,9 @@ kalahi:
 
 batayan:
   tl: ["sentiment", "belebele-qa-mc", "toxicity", "paraphrase", "translation-en-xx", "translation-xx-en", "abssum", "causal", "nli"]
+
+zh_nli:
+  zh: ["nli"]
+
+vi_nli:
+  vi: ["nli"]
