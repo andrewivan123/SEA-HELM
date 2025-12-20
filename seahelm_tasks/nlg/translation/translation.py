@@ -41,11 +41,11 @@ class TranslationMetric(SeaHelmMetric):
             "su": r"(?<=[T|t]arjamahan:)[\s\r\n]*.*",
             "tl": r"(?<=[S|s]alin:)[\s\r\n]*.*",
             "tl_full": r"(?<=[S|s]alin:)[\s\r\n]*.*",
-            "km": r"(?<=ការបកប្រែ៖)[\s\r\n]*.*",
+            "km": r"(?<=ការប្រែសម្រួល:)[\s\r\n]*.*",
             "lo": r"(?<=ການແປ:)[\s\r\n]*.*",
-            "my": r"(?<=ဘာသာပြန်ချက်-)[\s\r\n]*.*",
+            "my": r"(?<=ဘာသာပြန်ချက် -)[\s\r\n]*.*",
             "ms": r"(?<=[T|t]erjemahan:)[\s\r\n]*.*",
-            "zh": r"(?<=翻译：)[\s\r\n]*.*"
+            "zh": r"(?<=翻译:)[\s\r\n]*.*"
         }[lang]
 
     def evaluate_with_comet(self, references, sources, predictions):

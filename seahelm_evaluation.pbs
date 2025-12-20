@@ -4,7 +4,7 @@
 #PBS -k oed
 #PBS -N seahelm_eval
 #PBS -q auto
-#PBS -l select=1:ngpus=8
+#PBS -l select=1:ngpus=2
 #PBS -l walltime=56:00:00
 
 cd $PBS_O_WORKDIR
@@ -18,8 +18,8 @@ singularity exec -e \
 --env HF_DATASETS_CACHE=/scratch/e1583535/cache/datasets \
 $image bash << EOF > /scratch/e1583535/multiLingual-llm-project/logs/eval/seahelm/stdout.$PBS_JOBID.log 2> /scratch/e1583535/multiLingual-llm-project/logs/eval/seahelm/stderr.$PBS_JOBID.log
 
-if [ -d "/hpctmp/e1583535/virtualenvs/sea-helm" ]; then
-    source /hpctmp/e1583535/virtualenvs/sea-helm/bin/activate
+if [ -d "/hpctmp/e1583535/virtualenvs/og_seahelm" ]; then
+    source /hpctmp/e1583535/virtualenvs/og_seahelm/bin/activate
 fi
 
 echo "Starting evaluating at $(date)"
@@ -29,19 +29,19 @@ nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nouni
 
 python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 --tasks translation_only \
---output_dir /scratch/e1583535/outputs/seahelm/para-only-7B-checkpoints-and-others/translation_only \
+--output_dir /scratch/e1583535/outputs/seahelm/translation-only-18122025/translation_only \
 --model_type vllm \
---model_name aisingapore/Qwen-SEA-LION-v4-32B-IT \
---model_args "enable_prefix_caching=True,tensor_parallel_size=8,dtype=bfloat16" \
---num_in_context_examples 5 
+--model_name "swiss-ai/Apertus-8B-2509" \
+--model_args "enable_prefix_caching=True,tensor_parallel_size=2,dtype=bfloat16" \
+--num_in_context_examples 5 \
+--is_base_model 
 
 # python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
 # --tasks translation_xalma_sea \
 # --output_dir /scratch/e1583535/multiLingual-llm-project/outputs/parallel-last-100B-checkpoints-evaluation/translation_only-0shot \
 # --model_type vllm \
 # --model_name haoranxu/X-ALMA-13B-Group4 \
-# --model_args "enable_prefix_caching=True,tensor_parallel_size=4,max_num_seqs=128" \
+# --model_args "enable_prefix_caching=True,tensor_parallel_size=2" \
 # --num_in_context_examples 0
-# --is_base_model
 
 EOF

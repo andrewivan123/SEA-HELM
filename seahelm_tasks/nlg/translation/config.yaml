@@ -275,19 +275,19 @@ translation-en-xx:
           翻译：$TRANSLATION
           将 $TRANSLATION 替换为翻译后的文本。{fewshot_examples}
 
-          文本：
+          文本:
           ```
           {text}
           ```
         fewshot_example: |2-
           
           
-          文本：
+          文本:
           ```
           {text}
           ```
-          翻译：{label}
-        fewshot_label: '翻译：{label}'
+          翻译: {label}
+        fewshot_label: '翻译: {label}'
 
 translation-xx-en:
   metadata:
