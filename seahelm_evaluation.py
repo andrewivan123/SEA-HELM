@@ -973,6 +973,12 @@ if __name__ == "__main__":
         action="store_true",
         help="Include this flag to disable batching for model inference",
     )
+    parser.add_argument(
+        "--use_custom_aligned_bpe_tokenizer",
+        action="store_true",
+        help="Include this flag to use a custom Aligned BPE tokenizer for vLLM models",
+    )
+
 
     args = parser.parse_args()
     tasks_configuration = args.tasks
@@ -1032,6 +1038,7 @@ if __name__ == "__main__":
             tokenizer_mode="mistral" if model_name.startswith("mistralai") else "auto",
             load_format="mistral" if model_name.startswith("mistralai") else "auto",
             config_format="mistral" if model_name.startswith("mistralai") else "auto",
+            use_custom_tokenizer=args.use_custom_aligned_bpe_tokenizer,
             **model_args,
         )
     elif model_type.lower() == "none":

@@ -3,6 +3,9 @@ from tokenizers import processors
 from transformers import PreTrainedTokenizerFast
 from vllm import LLM, SamplingParams
 from vllm.logger import init_logger
+from olmo.tokenizer import AlignedBPETokenizer
+import os
+from tqdm import tqdm
 
 from serving.base_serving import BaseServing
 
@@ -103,14 +106,19 @@ class VLLMServing(BaseServing):
         tensor_parallel_size=1,
         seed=1234,
         add_bos_token=False,
+        use_custom_tokenizer: bool = False,
         **kwargs,
     ):
         if is_base_model:
-            with open("chat_templates/base_model.jinja") as f:
+            with open("/home/ec2-user/efs/SEA-HELM/chat_templates/base_model.jinja") as f:
                 chat_template = f.read()
             self.chat_template = chat_template
         else:
             self.chat_template = None
+        
+        self.custom_tokenizer = None
+        if use_custom_tokenizer:
+            self.custom_tokenizer = AlignedBPETokenizer(tokenizer_file=os.path.join(model,'tokenizer.json'))
 
         self.llm = LLM(
             model=model,
@@ -168,8 +176,13 @@ class VLLMServing(BaseServing):
         errors = []
         tokenized_prompts = []
 
-        for output in generated_outputs:
-            responses.append(output.outputs[0].text)
+        for output in tqdm(generated_outputs, desc="Parsing outputs (include decoding)"):
+            if self.custom_tokenizer is not None:
+                # use custom tokenizer to decode
+                decoded_text = self.custom_tokenizer.decode(output.outputs[0].token_ids)
+                responses.append(decoded_text)
+            else:
+                responses.append(output.outputs[0].text)
             if output.outputs[0].text == "":
                 # Log empty string as an EmptyGenerationError
                 errors.append("EmptyGenerationError")
