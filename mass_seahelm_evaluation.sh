@@ -1,6 +1,5 @@
 #!/bin/bash
 
-OUTPUT_DIR="/scratch/e1583535/outputs/seahelm/translation-only-instruction-19122025"
 # CHECKPOINT_DIRS=(
 #     "/scratch/e1583535/llm/nus-olmo/mixed-n10B"
 #     "/scratch/e1583535/llm/nus-olmo/para-first-n10B"
@@ -17,10 +16,8 @@ OUTPUT_DIR="/scratch/e1583535/outputs/seahelm/translation-only-instruction-19122
 
 # non-base-model Checkpoint
 CHECKPOINT_DIRS=(
-    "SeaLLMs/SeaLLMs-v3-1.5B"
-    # "sail/Sailor2-L-1B"
-    "aisingapore/Gemma-SEA-LION-v4-27B"
-    "aisingapore/Qwen-SEA-LION-v4-32B-IT"
+    "/scratch/e1583592/code/OLMo/workspace/checkpoints/aligned-bpe-cpt-v2/n7.6B_para-5.2_replay-2.4-aligned-bpe-1792-add_id_km_lo_ms_my_ta_th_tl_vi_zh_qwen3_v3/step3636-filtered-mapping-unsharded"
+    # "/scratch/e1583592/code/OLMo/workspace/checkpoints/aligned-bpe-cpt-v2/para-last-n10B-rerun"
 )
 
 TASK_AND_NUM_EXAMPLES=(
@@ -48,7 +45,10 @@ for CHECKPOINT_DIR in "${CHECKPOINT_DIRS[@]}"; do
 
         echo "Running evaluation for task: $TASK with $NUM_EXAMPLES examples"
 
-        qsub -v CHECKPOINT_DIR="$CHECKPOINT_DIR",CHECKPOINT_NAME="$(basename $CHECKPOINT_DIR)",OUTPUT_DIR="$OUTPUT_DIR/$TASK",TASK="$TASK",NUM_EXAMPLES="$NUM_EXAMPLES" \
+        # set output_dir as parent of checkpoint dir
+        OUTPUT_DIR=$(dirname "$CHECKPOINT_DIR")
+
+        qsub -v CHECKPOINT_DIR="$CHECKPOINT_DIR",CHECKPOINT_NAME="$(basename $CHECKPOINT_DIR)",TASK="$TASK",NUM_EXAMPLES="$NUM_EXAMPLES" \
         -N seahelm_eval_$(basename $CHECKPOINT_DIR)_$TASK \
         mass_seahelm_evaluation.pbs
 

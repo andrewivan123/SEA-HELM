@@ -8,7 +8,7 @@
 
 cd $PBS_O_WORKDIR
 
-image="/app1/common/singularity-img/hopper/pytorch/pytorch_2.3.0_cuda_12.4_ngc_24.04.sif"
+image="/app1/common/singularity-img/hopper/cuda/cuda_12.4.1-cudnn-devel-u22.04.sif"
 
 module load singularity
 
@@ -28,38 +28,29 @@ if [ -z "$CHECKPOINT_NAME" ]; then
     exit 1
 fi
 
-if [ -z "$OUTPUT_DIR" ]; then
-    echo "ERROR: OUTPUT_DIR not set"
-    exit 1
-fi
-
 if [ -z "$NUM_EXAMPLES" ]; then
     echo "ERROR: NUM_EXAMPLES not set"
     exit 1
 fi
 
-BASE_LOG_DIR="/scratch/e1583535/multiLingual-llm-project/logs/eval/seahelm"
-
 singularity exec -e \
---env HF_HOME=/scratch/e1583535/cache \
---env HF_DATASETS_CACHE=/scratch/e1583535/cache/datasets \
-$image bash << EOF > $BASE_LOG_DIR/stdout-$CHECKPOINT_NAME-$TASK.$PBS_JOBID.log 2> $BASE_LOG_DIR/stderr-$CHECKPOINT_NAME-$TASK.$PBS_JOBID.log
+--env HF_HOME=/scratch/e1583592/cache \
+$image bash << EOF > $CHECKPOINT_DIR/stdout-$CHECKPOINT_NAME-$TASK.$PBS_JOBID.log 2> $CHECKPOINT_DIR/stderr-$CHECKPOINT_NAME-$TASK.$PBS_JOBID.log
 
-if [ -d "/hpctmp/e1583535/virtualenvs/og_seahelm" ]; then
-    source /hpctmp/e1583535/virtualenvs/og_seahelm/bin/activate
-fi
+source /hpctmp/e1583592/virtualenvs/olmo/bin/activate
 
 echo "Starting evaluating at $(date)"
 echo "Running on host: $(hostname)"
 echo "GPU info:"
 nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv,noheader,nounits || echo "No GPU detected"
 
-python /scratch/e1583535/SEA-HELM/seahelm_evaluation.py \
+python /scratch/e1583592/code/SEA-HELM/seahelm_evaluation.py \
 --tasks $TASK \
---output_dir $OUTPUT_DIR \
+--output_dir $CHECKPOINT_DIR \
 --model_type vllm \
 --model_name $CHECKPOINT_DIR \
---model_args "enable_prefix_caching=True,tensor_parallel_size=4" \
+--model_args "enable_prefix_caching=True,tensor_parallel_size=8" \
+--is_base_model \
 --num_in_context_examples $NUM_EXAMPLES
 
 EOF
