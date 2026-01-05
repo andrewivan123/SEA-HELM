@@ -6,18 +6,18 @@ import re
 
 
 regex_string = {
-    "id": r"(?<=[T|t]erjemahan:)[\s\r\n]*.*",
-    "th": r"(?<=คำแปล:)[\s\r\n]*.*",
-    "vi": r"(?<=[B|b]ản dịch:)[\s\r\n]*.*",
-    "ta": r"(?<=மொழிபெயர்ப்பு:)[\s\r\n]*.*",
-    "jv": r"(?<=[T|t]erjemahan:)[\s\r\n]*.*",
-    "su": r"(?<=[T|t]arjamahan:)[\s\r\n]*.*",
-    "tl": r"(?<=[S|s]alin:)[\s\r\n]*.*",
-    "km": r"(?<=ការបកប្រែ៖)[\s\r\n]*.*",
-    "lo": r"(?<=ການແປ:)[\s\r\n]*.*",
-    "my": r"(?<=ဘာသာပြန်ချက်-)[\s\r\n]*.*",
-    "ms": r"(?<=[T|t]erjemahan:)[\s\r\n]*.*",
-    "zh": r"(?<=翻译：)[\s\r\n]*.*"
+    "id": r"(?:[Tt]erjemahan|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "th": r"(?:คำแปล|การแปล|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "vi": r"(?:[Bb]ản dịch|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "ta": r"(?:மொழிபெயர்ப்பு|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "jv": r"(?:[Tt]erjemahan|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "su": r"(?:[Tt]arjamahan|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "tl": r"(?:[Ss]alin|[Tt]ranslation|Copy)[:\uff1a]\s*(.*)",
+    "km": r"(?:ការបកប្រែ|reversingសម្រួល|ការប្រែសម្រួល|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "lo": r"(?:ການແປ|[Tt]ranslation|ແປ)[:\uff1a]\s*(.*)",
+    "my": r"(?:ဘာသာပြန်ချက် [-]|[Tt]ranslation[:\uff1a])\s*(.*)",
+    "ms": r"(?:[Tt]erjemahan|[Tt]ranslation)[:\uff1a]\s*(.*)",
+    "zh": r"(?:翻译[：:]|[Tt]ranslation[:\uff1a])\s*(.*)"
 }
 
 
@@ -29,9 +29,14 @@ def parse_response(response: list, lang: str, use_lowercase: bool = False) -> st
             _response = response[0]
 
         try:
-            output = re.search(regex_string[lang], _response).group(0)
-            output = output.strip("$")
-        except:
+            match = re.search(regex_string[lang], _response)
+            if match:
+                output = match.group(1)  # Extract captured group
+                output = output.strip("$")
+            else:
+                output = _response
+        except Exception as e:
+            print(f"{lang} regex extraction failed, returning full response. Error: {e}")
             output = _response
 
         return output.strip()
@@ -66,7 +71,7 @@ def extract_responses(input_path: str, output_path: str, lang: str = None) -> in
             # write the responses value as a JSON-encoded line
             
             # outfile.write(json.dumps(parse_response(obj["responses"], lang="en"), ensure_ascii=False) + "\n")
-            clean_response = obj.get("cleaned_response", None) or parse_response(obj.get("responses", ""), lang=lang)
+            clean_response = parse_response(obj.get("responses", ""), lang=lang)
             outfile.write(clean_response.strip().replace("\n", " ") + "\n")
             written += 1
     return written
