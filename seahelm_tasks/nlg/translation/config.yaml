@@ -6,7 +6,7 @@ translation-en-xx:
   metric_file: seahelm_tasks/nlg/translation/translation.py
   metric_class: TranslationMetric
   use_comet_metric: false
-  use_metricx_metric: true
+  use_metricx_metric: false
   use_chrf_metric: false
   metricx_batch_size: 32
   metric: normalized_metricx_wmt24_scores
@@ -297,7 +297,7 @@ translation-xx-en:
   metric_file: seahelm_tasks/nlg/translation/translation.py
   metric_class: TranslationMetric
   use_comet_metric: false
-  use_metricx_metric: true
+  use_metricx_metric: false
   use_chrf_metric: false
   metricx_batch_size: 32
   metric: normalized_metricx_wmt24_scores
