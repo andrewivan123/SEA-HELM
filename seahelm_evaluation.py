@@ -382,6 +382,11 @@ Filepath: %s""",
                 conversations = self.update_conversation(conversations, role, content)
 
             row["conversations"] = conversations
+            
+            # Update prompt_templates with the actual template used from config
+            if turn == 1:
+                row["prompt_templates"] = [specific_task_config["prompt_template"]["template"]]
+            
             return row
 
         return _prompt_formatter
